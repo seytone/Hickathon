@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/seytone/Hickathon/issues"
   },
-  "homepage": "https://github.com/seytone/Hickathon#readme"
+  "homepage": "https://github.com/seytone/Hickathon#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
