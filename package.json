@@ -1,0 +1,19 @@
+{
+  "name": "hickathon",
+  "version": "1.0.0",
+  "description": "Hicron Hackaton",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seytone/Hickathon.git"
+  },
+  "author": "Jackson Echeverri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seytone/Hickathon/issues"
+  },
+  "homepage": "https://github.com/seytone/Hickathon#readme"
+}
