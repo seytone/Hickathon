@@ -9,27 +9,34 @@ const db = new Pool({
 
 /** USERS CRUD */
 const getUsers = (request, response) => {
-   db.query('SELECT * FROM users ORDER BY name ASC', (error, results) => {
-      if (error) {
-         throw error;
+   db.query(
+      'SELECT * FROM users ORDER BY name ASC',
+      (error, results) => {
+         if (error) {
+            throw error;
+         }
+         response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-   });
+   );
 };
 const getUserById = (request, response) => {
    const id = parseInt(request.params.id);
-   db.query('SELECT * FROM users WHERE id = $1', (error, results) => {
-      if (error) {
-         throw error;
+   db.query(
+      'SELECT * FROM users WHERE id = $1',
+      [id],
+      (error, results) => {
+         if (error) {
+            throw error;
+         }
+         response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-   });
+   );
 };
 const createUser = (request, response) => {
-   const { name, lastname, email, role, phone, password } = request.body;
+   const { name, lastname, email, password, role } = request.body;
    db.query(
-      'INSERT INTO users (name, lastname, email, role, phone, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [name, lastname, email, role, phone, password],
+      'INSERT INTO users (name, lastname, email, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [name, lastname, email, password, role],
       (error, results) => {
          if (error) {
             throw error;
@@ -40,10 +47,10 @@ const createUser = (request, response) => {
 };
 const updateUser = (request, response) => {
    const id = parseInt(request.params.id);
-   const { name, lastname, email, role, phone, password } = request.body;
+   const { name, lastname, email, password, role } = request.body;
    db.query(
-      'UPDATE users SET name = $1, lastname = $2, email = $3, role = $4, phone = $5, password = $6 WHERE id = $7',
-      [name, lastname, email, role, phone, password, id],
+      'UPDATE users SET name = $1, lastname = $2, email = $3, password = $4, role = $5 WHERE id = $6',
+      [name, lastname, email, password, role, id],
       (error, results) => {
          if (error) {
             throw error;
@@ -68,32 +75,44 @@ const deleteUser = (request, response) => {
 
 /** ABSENCES CRUD */
 const getAbsences = (request, response) => {
-   db.query('SELECT * FROM absences ORDER BY date_registered', (error, results) => {
-      if (error) {
-         throw error;
+   db.query(
+      'SELECT * FROM absences ORDER BY date_registered',
+      (error, results) => {
+         if (error) {
+            throw error;
+         }
+         response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-   });
+   );
 };
 const getAbsenceById = (request, response) => {
    const id = parseInt(request.params.id);
-   db.query('SELECT * FROM absences WHERE id = $1', (error, results) => {
-      if (error) {
-         throw error;
+   db.query(
+      'SELECT * FROM absences WHERE id = $1',
+      [id],
+      (error, results) => {
+         if (error) {
+            throw error;
+         }
+         response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-   });
+   );
 };
 const getAbsencesByUserId = (request, response) => {
-   const id = parseInt(request.params.id);
-   db.query('SELECT * FROM absences WHERE user_id = $1', (error, results) => {
-      if (error) {
-         throw error;
+   const user_id = parseInt(request.params.user_id);
+   db.query(
+      'SELECT * FROM absences WHERE user_id = $1',
+      [user_id],
+      (error, results) => {
+         if (error) {
+            throw error;
+         }
+         response.status(200).json(results.rows);
       }
-      response.status(200).json(results.rows);
-   });
-}; User
+   );
+};
 const createAbsence = (request, response) => {
+   console.log(request.body);
    const { user_id, start_date, finish_date, request_msg, title } = request.body;
    db.query(
       'INSERT INTO absences (user_id, start_date, finish_date, request_msg, title) VALUES ($1, $2, $3, $4, $5) RETURNING *',
